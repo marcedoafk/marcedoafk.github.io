@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  --color-page: #16181d;
+  --color-panel: #292c34;
+  --color-heading: #e2e4e9;
+  --color-muted: #878ea1;
+  --color-accent: #e3646e;
+}
+
+body { background: var(--color-page); color: #c0c4ce; font: 400 1rem/1.4 'Maven Pro', sans-serif; }
+h1, h2, h3 { font-family: Asap, sans-serif; font-weight: 700; line-height: 1.2; color: var(--color-heading); }
+.kicker { font: 400 1.25rem/1.2 Inconsolata, monospace; }
+h2 { margin-top: .5rem; font-size: 1.5rem; }
+.intro, .contact { position: relative; isolation: isolate; }
+.codebg { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+a:focus-visible { outline: 2px solid #3996db; outline-offset: 4px; }
+
+/* Animações: só com movimento permitido. Scroll-reveal via CSS puro (Chrome/Safari/Edge);
+   onde animation-timeline não existe (Firefox), os elementos simplesmente aparecem sem efeito. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } }
+  @keyframes bob { 50% { transform: translateY(6px); } }
+
+  .intro-inner > * { animation: rise .7s cubic-bezier(.2, .7, .2, 1) backwards; }
+  .intro-inner > :nth-child(2) { animation-delay: .1s; }
+  .intro-inner > :nth-child(3) { animation-delay: .2s; }
+  .intro-inner > :nth-child(4) { animation-delay: .3s; }
+  .intro-inner > :nth-child(5) { animation-delay: .4s; }
+  .intro-inner > :nth-child(6) { animation-delay: .5s; }
+
+  @supports (animation-timeline: view()) {
+    @keyframes section-enter { from { translate: 0 8px; } to { translate: 0 0; } }
+    .reveal { animation: section-enter linear; animation-timeline: view(); animation-range: entry 0% entry 35%; }
+  }
+
+  .lift { transition: transform .2s ease, box-shadow .2s ease; }
+  .lift:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -12px #000a; }
+}
+
+/* ---- Fase 2: animações avançadas ---- */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes shimmer { to { background-position: 200% center; } }
+  @keyframes float { 50% { transform: translateY(-6px); } }
+  @keyframes progress { from { scale: 0 1; } to { scale: 1 1; } }
+  @keyframes hero-out { to { opacity: 0; transform: translateY(-60px) scale(.96); filter: blur(5px); } }
+
+  /* Título com brilho percorrendo o texto */
+  h1 {
+    background: linear-gradient(100deg, var(--color-heading) 40%, var(--color-accent) 50%, var(--color-heading) 60%) 0 / 200% auto;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    animation: rise .7s .2s cubic-bezier(.2, .7, .2, 1) backwards, shimmer 2.4s 1s ease-in-out 1 forwards;
+  }
+
+  /* Pills de tecnologia flutuam em fases diferentes */
+  .intro li { animation: float 4s ease-in-out infinite; }
+  .intro li:nth-child(2n) { animation-delay: -1.3s; }
+  .intro li:nth-child(3n) { animation-delay: -2.6s; }
+
+  @supports (animation-timeline: view()) {
+    /* Hero some ao rolar */
+    .intro-inner { will-change: transform, opacity, filter; animation: hero-out linear both; animation-timeline: scroll(root); animation-range: 10vh 80vh; } /* só termina quando o conteúdo já saiu da tela */
+
+    /* Barra de progresso de leitura */
+    .progress {
+      position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 50; transform-origin: 0 50%; scale: 0 1;
+      background: linear-gradient(90deg, var(--color-accent), #bb72e9);
+      animation: progress linear both; animation-timeline: scroll(root);
+    }
+  }
+
+  /* Spotlight que segue o mouse nos cards (--mx/--my vêm de main.ts) */
+  .spot { position: relative; isolation: isolate; }
+  .spot::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1; pointer-events: none; opacity: 0;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), #e3646e30, transparent 70%);
+    transition: opacity .3s;
+  }
+  .spot:hover::before { opacity: 1; }
+
+}
+
+/* ---- Navegação fixa ---- */
+.topnav { position: fixed; inset: 3px 0 auto 0; z-index: 40; background: #16181df5; border-bottom: 1px solid #ffffff0d; }
+.navlink { color: var(--color-muted); transition: color .2s, background-color .2s; }
+.navlink:hover { color: var(--color-heading); }
+.navlink[aria-current="true"] { color: var(--color-heading); background: var(--color-panel); }
+section[id], footer[id] { scroll-margin-top: 56px; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    /* só aparece depois de rolar o hero um pouco */
+    @keyframes nav-in { from { opacity: 0; transform: translateY(-100%); } }
+    .topnav { animation: nav-in linear both; animation-timeline: scroll(root); animation-range: 60vh 80vh; }
+  }
+}
+
+/* ---- Janela de código e cursor ---- */
+.tk-k { color: #bb72e9; } .tk-v { color: #e2e4e9; } .tk-pr { color: #3996db; } .tk-s { color: #7cb25a; } .tk-p { color: var(--color-muted); }
+.caret { display: inline-block; width: .5ch; height: 1.1em; margin-left: 2px; vertical-align: text-bottom; background: var(--color-accent); }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes blink { 50% { opacity: 0; } }
+  .caret { animation: blink 1s steps(1) infinite; }
+}
+
+/* ---- Editor sobre.ts ---- */
+.editor { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid #ffffff12; background: #0d0e11; box-shadow: 0 28px 60px -28px #000, 0 0 80px -50px var(--color-accent); }
+.editor::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; background: linear-gradient(90deg, transparent, var(--color-accent), #bb72e9, transparent); opacity: .7; }
+.editor-bar, .editor-status { display: flex; align-items: center; gap: .75rem; background: #14161b; font: 400 .8125rem/1 Inconsolata, monospace; color: var(--color-muted); }
+.editor-bar { padding: .6rem 1rem; border-bottom: 1px solid #ffffff0d; }
+.editor-status { justify-content: space-between; padding: .45rem 1rem; border-top: 1px solid #ffffff0d; font-size: .75rem; }
+.editor-dots { display: flex; gap: .4rem; }
+.editor-dots i { width: 10px; height: 10px; border-radius: 50%; background: #3a4150; }
+.editor-dots i:nth-child(1) { background: #e3646e; } .editor-dots i:nth-child(2) { background: #a08847; } .editor-dots i:nth-child(3) { background: #4f7a38; }
+.editor-tab { display: inline-flex; align-items: center; gap: .45rem; padding: .4rem .75rem; border-radius: 8px; background: var(--color-panel); color: var(--color-heading); }
+.editor-path { margin-left: auto; display: none; }
+@media (min-width: 640px) { .editor-path { display: block; } }
+.editor-code { counter-reset: ln; margin: 0; padding: .9rem 0 1rem; white-space: pre-wrap; overflow-wrap: anywhere; font: 400 14px/1.8 Inconsolata, monospace; color: var(--color-heading); }
+@media (min-width: 640px) { .editor-code { font-size: 15px; line-height: 1.85; padding: 1.1rem 0 1.2rem; } }
+/* número de linha em ::before: não entra na seleção/cópia; recuo da quebra acompanha a indentação */
+.ln { position: relative; display: block; counter-increment: ln; padding: 0 1rem 0 calc(1rem + 3.2ch + var(--i, 0) * 2ch); }
+.ln::before { content: counter(ln); position: absolute; left: 1rem; width: 2ch; text-align: right; color: #878ea166; user-select: none; }
+.ln.cur { background: linear-gradient(90deg, #e3646e18, transparent 75%); }
+.ln.cur::before { color: var(--color-accent); }

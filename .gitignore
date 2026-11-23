@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env.local
+
+.claude/
+# imagens de template sem uso (não são minhas)
+public/media/project-*.png
+public/media/Image.png

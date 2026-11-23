@@ -6,3 +6,4 @@ dist/
 # imagens de template sem uso (não são minhas)
 public/media/project-*.png
 public/media/Image.png
+.DS_Store

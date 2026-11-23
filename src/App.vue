@@ -9,8 +9,8 @@ const projects = [
   { name: 'Qbombom Sorvetes', url: 'https://qbombomararipe.com.br/', tags: ['Sorveteria', 'Pedidos online'], description: 'Criei a experiência de compra da sorveteria. O cliente personaliza o produto com os adicionais disponíveis e revisa suas escolhas no carrinho antes de pedir.' }
 ]
 const services = [
-  ['Devices', 'Aplicações web', 'Desenvolvo interfaces em Vue para tarefas com várias etapas, como personalizar um produto, revisar a sacola e concluir um pedido.'],
-  ['HardDrives', 'APIs e integrações', 'Escrevo APIs em Node.js com Fastify e Express. No servidor, valido os dados que chegam da interface e aplico as regras do pedido.'],
+  ['Devices', 'Aplicações web e mobile', 'Desenvolvo interfaces para fluxos com várias etapas, como a personalização de um produto, a revisão da sacola e a conclusão de um pedido. Aprendo novas tecnologias conforme o projeto exige.'],
+  ['HardDrives', 'APIs e integrações', 'Escrevo APIs em Node.js com Fastify e Express. No servidor, valido os dados recebidos da interface e aplico as regras de negócio.'],
   ['Infinity', 'Infraestrutura', 'Configuro aplicações em contêineres Docker e uso Nginx em servidores Linux para encaminhar as requisições ao serviço certo.']
 ]
 const contacts = [
@@ -90,7 +90,7 @@ onMounted(() => {
       <p class="kicker">Olá, eu sou <span class="text-accent">Marcos Macedo</span></p>
       <h1 class="mt-2 text-[clamp(2.25rem,5vw,3.5rem)]">Desenvolvedor Full Stack</h1>
       <p class="kicker mt-3 h-7 text-muted" aria-hidden="true">&gt; {{ typed }}<span class="caret"></span></p>
-      <p class="mx-auto mt-5 max-w-[680px] text-sm leading-[1.4] text-muted">Crio aplicações web e APIs com Vue, Node.js e TypeScript. Entre meus projetos estão as plataformas de pedidos da Embraza Gringos e da Qbombom e a pix-brcode, uma biblioteca para quem integra Pix a aplicações.</p>
+      <p class="mx-auto mt-5 max-w-[680px] text-sm leading-[1.4] text-muted">Desenvolvo aplicações web, mobile e APIs, do planejamento ao deploy, com Vue, Node.js e TypeScript. Entre meus projetos estão as plataformas de pedidos da Embraza Gringos e da Qbombom e a pix-brcode, biblioteca publicada no npm para integrar Pix.</p>
       <ul class="mt-12 flex flex-wrap justify-center gap-3 sm:mt-20 sm:gap-4">
         <li v-for="technology in technologies" :key="technology" class="icon-trigger flex items-center gap-2 rounded-full bg-panel px-4 py-2">
           <AnimatedIcon :name="technology" class="size-5" />{{ technology }}
@@ -124,7 +124,7 @@ onMounted(() => {
     </section>
     <section id="sobre" class="px-5 py-24 text-center">
       <header class="reveal mb-10"><p class="kicker text-accent">Sobre mim</p><h2>O que tenho aprendido construindo</h2></header>
-      <p class="reveal mx-auto max-w-[680px] text-base leading-[1.5]">Curso Análise e Desenvolvimento de Sistemas. Nos projetos de delivery, aprendi a olhar para o que acontece depois do clique em “Pedir”: o cliente precisa saber se o pedido foi recebido e como acompanhá-lo. Publicar a pix-brcode trouxe outro desafio: escrever testes e exemplos para que alguém consiga usar meu código sem precisar falar comigo.</p>
+      <p class="reveal mx-auto max-w-[680px] text-base leading-[1.5]">Curso Análise e Desenvolvimento de Sistemas. Atuo em diferentes frentes, de interfaces a APIs e infraestrutura, e aprendo o que cada projeto exige. Nos projetos de delivery, aprendi a olhar para o que acontece depois do clique em “Pedir”: o cliente precisa saber se o pedido foi recebido e como acompanhá-lo. Publicar a pix-brcode trouxe outro desafio: escrever testes e exemplos para que alguém consiga usar meu código sem precisar falar comigo.</p>
       <figure class="editor reveal mx-auto mt-10 max-w-[600px] text-left" aria-label="Resumo do perfil em código TypeScript">
         <div class="editor-bar">
           <span class="editor-dots" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -139,7 +139,7 @@ onMounted(() => {
     <footer id="contato" class="contact px-5 pt-32 pb-[200px] text-center">
       <canvas class="codebg" data-bg="contact" aria-hidden="true"></canvas>
       <p class="kicker text-[#bb72e9]">Contato</p><h2>Vamos conversar?</h2>
-      <p class="mx-auto mt-2 max-w-[520px]">Quer conversar sobre uma vaga ou um projeto? Me chame no LinkedIn. Posso mostrar como implementei o fluxo de pedidos ou explicar as decisões por trás da pix-brcode.</p>
+      <p class="mx-auto mt-2 max-w-[520px]">Quer conversar sobre uma vaga ou um projeto, web, mobile ou API? Me chame no LinkedIn. Posso apresentar os projetos acima e explicar as decisões técnicas por trás deles.</p>
       <ul class="mx-auto mt-12 grid max-w-[400px] gap-4 text-left">
         <li v-for="contact in contacts" :key="contact.name" class="reveal lift spot rounded-lg">
           <a :href="contact.href" class="icon-trigger flex items-center gap-3 rounded-lg bg-panel p-5 font-medium" >
